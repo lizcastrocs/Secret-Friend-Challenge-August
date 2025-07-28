@@ -1,27 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Amigo Secreto</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f0f0f0;
+    }
+    h1 { color: #333; }
+    input, button { padding: 10px; margin: 5px 0; font-size: 16px; }
+    ul { list-style-type: none; padding: 0; }
+    li {
+      background-color: #fff;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
 </head>
 <body>
 
   <h1>Amigo Secreto 🎁</h1>
 
-  <input type="text" id="nombreInput" placeholder="Escribe un nombre...">
-  <button onclick="adicionarNombre()">Adicionar</button>
+  <input type="text" id="nombreInput" placeholder="Escribe un nombre..." />
+  <button id="btnAdicionar">Adicionar</button>
 
   <ul id="listaNombres"></ul>
 
-  <button onclick="sortearAmigo()">Sortear Amigo</button>
+  <button id="btnSortear">Sortear Amigo</button>
 
   <div id="resultado"></div>
 
-  <script src="app.js"></script>
-</body>
-</html>
+  <script>
+    // Código JavaScript dentro de index.html para evitar problemas de rutas
 
-    <script src="app.js" defer></script>
+    const nombres = [];
+
+    function adicionarNombre() {
+      const input = document.getElementById("nombreInput");
+      const nombre = input.value.trim();
+
+      if (nombre === "") {
+        alert("Por favor, ingresa un nombre válido.");
+        return;
+      }
+
+      nombres.push(nombre);
+      actualizarLista();
+
+      input.value = "";
+      input.focus();
+    }
+
+    function actualizarLista() {
+      const lista = document.getElementById("listaNombres");
+      lista.innerHTML = "";
+
+      nombres.forEach(nombre => {
+        const li = document.createElement("li");
+        li.textContent = nombre;
+        lista.appendChild(li);
+      });
+    }
+
+    function sortearAmigo() {
+      if (nombres.length === 0) {
+        alert("Agrega al menos un nombre antes de sortear.");
+        return;
+      }
+
+      const indice = Math.floor(Math.random() * nombres.length);
+      const amigoSecreto = nombres[indice];
+
+      document.getElementById("resultado").textContent =
+        "🎉 El amigo secreto es: " + amigoSecreto + " 🎉";
+    }
+
+    // Asignar eventos después que carga el DOM
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("btnAdicionar").addEventListener("click", adicionarNombre);
+      document.getElementById("btnSortear").addEventListener("click", sortearAmigo);
+    });
+  </script>
+
 </body>
 </html>
