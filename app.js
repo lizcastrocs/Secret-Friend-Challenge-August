@@ -1,4 +1,4 @@
-console.log("Amigo Secreto Challenge")
+console.log("Challenge Amigo Secreto")
 const nombres = [];
 
 function adicionarNombre() {
