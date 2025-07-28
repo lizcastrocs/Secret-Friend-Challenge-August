@@ -1,10 +1,8 @@
 console.log("ejecutando el sistema")
-// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
-const listaDeAmigos = [];
-const listaDeGanadores = [];
+const nombres = [];
 
-function agregarAmigo() {
-  const input = document.getElementById("amigo");
+function adicionarNombre() {
+  const input = document.getElementById("nombreInput");
   const nombre = input.value.trim();
 
   if (nombre === "") {
@@ -12,56 +10,32 @@ function agregarAmigo() {
     return;
   }
 
-  listaDeAmigos.push(nombre);
+  nombres.push(nombre);
+  actualizarLista();
   input.value = "";
-  mostrarLista();
-  actualizarEstadoBoton();
+  input.focus();
 }
 
-function mostrarLista() {
-  const ul = document.getElementById("listaAmigos");
-  ul.innerHTML = "";
+function actualizarLista() {
+  const lista = document.getElementById("listaNombres");
+  lista.innerHTML = "";
 
-  listaDeAmigos.forEach((nombre, i) => {
+  nombres.forEach(nombre => {
     const li = document.createElement("li");
-    li.textContent = `${i + 1}. ${nombre}`;
-    ul.appendChild(li);
-  });
-}
-
-function mostrarGanadores() {
-  const ul = document.getElementById("ganadores");
-  ul.innerHTML = "";
-
-  listaDeGanadores.forEach((nombre, i) => {
-    const li = document.createElement("li");
-    li.textContent = `${i + 1}. ${nombre}`;
-    ul.appendChild(li);
+    li.textContent = nombre;
+    lista.appendChild(li);
   });
 }
 
 function sortearAmigo() {
-  if (listaDeAmigos.length < 2) {
-    alert("Debe haber al menos 2 amigos para hacer un sorteo.");
+  if (nombres.length === 0) {
+    alert("Agrega al menos un nombre antes de sortear.");
     return;
   }
 
-  const indice = Math.floor(Math.random() * listaDeAmigos.length);
-  const ganador = listaDeAmigos.splice(indice, 1)[0];
-  listaDeGanadores.push(ganador);
+  const indice = Math.floor(Math.random() * nombres.length);
+  const amigoSecreto = nombres[indice];
 
-  document.getElementById("resultado").innerHTML = `<li>🎉 El amigo secreto es: <strong>${ganador}</strong></li>`;
-
-  mostrarLista();
-  mostrarGanadores();
-  actualizarEstadoBoton();
-
-  if (listaDeAmigos.length < 2) {
-    document.getElementById("resultado").innerHTML += `<li>🎊 Sorteo finalizado. Ya no hay suficientes participantes.</li>`;
-  }
-}
-
-function actualizarEstadoBoton() {
-  const boton = document.querySelector(".button-draw");
-  boton.disabled = listaDeAmigos.length < 2;
+  document.getElementById("resultado").textContent =
+    "🎉 El amigo secreto es: " + amigoSecreto + " 🎉";
 }
